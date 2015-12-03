@@ -93,9 +93,12 @@ class EleveController extends Controller
      */
     public function showAction($id)
     {
+
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('WCSCantineBundle:Eleve')->find($id);
+        $entity= $em->getRepository('WCSCantineBundle:Eleve')->find($id);
+        $user = $em->getRepository('ApplicationSonataUserBundle:User')->findAll();
+
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Eleve entity.');
@@ -103,10 +106,13 @@ class EleveController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
+
         return $this->render('WCSCantineBundle:Eleve:show.html.twig', array(
-            'entity'      => $entity,
+            'entity'=> $entity,
+            'user'=> $user,
             'delete_form' => $deleteForm->createView(),
         ));
+
     }
 
     /**

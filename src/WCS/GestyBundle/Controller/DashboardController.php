@@ -15,4 +15,5 @@ class DashboardController extends Controller
         }
         return $this->render('WCSGestyBundle:Dashboard:index.html.twig');
     }
+
 }
