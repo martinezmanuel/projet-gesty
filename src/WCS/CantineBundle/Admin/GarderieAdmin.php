@@ -2,6 +2,7 @@
 //WCS/CantineBundle/Admin/GarderieAdmin.php
 namespace WCS\CantineBundle\Admin;
 
+use Doctrine\ORM\EntityRepository;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -16,11 +17,23 @@ class GarderieAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('eleve', null)
+            
             ->add('date_heure','sonata_type_datetime_picker',(array(
                 'label'=>'Date',
-                'format' => 'dd-MM-y HH:ii'
+                'format' => 'dd/MM/y HH:mm'
             )))
+            ->add('eleve', 'entity', array(
+                'class'   => 'WCSCantineBundle:Eleve',
+
+                'query_builder' => function(EntityRepository $er)
+                {
+                    return $er->findByGarderieFiltered();
+                },
+
+
+                'required'  => false,
+                'mapped' => true
+            ))
             ->add('status', 'choice', array(
                 'choices' => array(
                     null => 'Choisissez le statut',
@@ -41,7 +54,7 @@ class GarderieAdmin extends Admin
             ->add('eleve', null)
             ->add('date_heure', 'doctrine_orm_datetime_range', array(
                 'widget' => 'single_text',
-                'format' => 'yyyy-MM-dd HH:ii',
+                'format' => 'yyyy/MM/dd HH:mm',
             ))
         ;
 
@@ -54,7 +67,7 @@ class GarderieAdmin extends Admin
             ->addIdentifier('id')
             ->add('eleve', null)
             ->add('date_heure', 'date', array(
-                'format' => 'd/m/Y H i',
+                'format' => 'd/m/Y H:i',
                 'label' => false
             ))
             ->add('status', 'choice', array(

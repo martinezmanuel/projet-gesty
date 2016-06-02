@@ -2,6 +2,7 @@
 //WCS/CantineBundle/Admin/TapAdmin.php
 namespace WCS\CantineBundle\Admin;
 
+use Doctrine\ORM\EntityRepository;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -16,11 +17,24 @@ class TapAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('eleve', null)
+
             ->add('date','sonata_type_date_picker',(array(
                 'label'=>'Date',
-                'format' => 'dd-MM-y'
+                'format' => 'dd/MM/y'
             )))
+
+            ->add('eleve', 'entity', array(
+                'class'   => 'WCSCantineBundle:Eleve',
+
+                'query_builder' => function(EntityRepository $er)
+                {
+                    return $er->findByTapFiltered();
+                },
+
+
+                'required'  => false,
+                'mapped' => true
+            ))
             ->add('status', 'choice', array(
                 'choices' => array(
                     null => 'Choisissez le statut',
@@ -41,7 +55,7 @@ class TapAdmin extends Admin
             ->add('eleve', null)
             ->add('date', 'doctrine_orm_date_range', array(
                 'widget' => 'single_text',
-                'format' => 'yyyy-MM-dd',
+                'format' => 'yyyy/MM/dd',
             ))
         ;
 

@@ -14,7 +14,7 @@ class Eleve
 
     public function __toString()
     {
-        return $this->getPrenom().' '.$this->getNom();
+        return $this->getPrenom().' '.strtoupper($this->getNom());
 
     }
 

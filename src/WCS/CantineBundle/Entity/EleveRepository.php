@@ -149,6 +149,42 @@ class EleveRepository extends EntityRepository
             ->setParameter(':dateFin', $periode->getFin());
         return $query->getResult();
     }
+
+    public function findByTapFiltered()
+    {
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('e')
+            ->from('WCSCantineBundle:eleve', 'e')
+            ->join('e.division', 'd')
+            ->join('d.school' , 's')
+            ->where("s.active_tap = TRUE")
+            ->orderBy('e.nom');
+
+
+
+        return $qb;
+    }
+
+    public function findByGarderieFiltered()
+    {
+        
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('e')
+            ->from('WCSCantineBundle:eleve', 'e')
+            ->join('e.division', 'd')
+            ->join('d.school' , 's')
+            ->where("s.active_garderie = TRUE")
+            ->orderBy('e.nom');
+
+
+
+        return $qb;
+    }
+
+
 }
 
     
