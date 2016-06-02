@@ -62,6 +62,7 @@ class ProfileType extends \Sonata\UserBundle\Form\Type\ProfileType
                     'Cheque' => 'Chèque',
                     'Especes' => 'Espèces',
                     'Prelevements' => 'Prélèvements',
+                    'Carte Bleue' => 'Carte Bleue'
 
                 )))
             ->add('numeroIban', 'text', array( 'required' => false))
